@@ -8,6 +8,8 @@ public class UnionFind {
 		arr = new int[n]; 
 		for(int i =0 ;i<n ;i++)
 			arr[i] = i;
+		
+		
 	}
 	
 	boolean connected(int x, int y) {
