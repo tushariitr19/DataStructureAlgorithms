@@ -10,8 +10,9 @@ class LinkList{
 	LinkList(){
 		
 		// Here to show the first Link always starts as null
-		
 		firstLink = null;
+		
+		
 		
 	}
 	
