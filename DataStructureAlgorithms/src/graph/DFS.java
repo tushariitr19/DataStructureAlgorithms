@@ -15,25 +15,15 @@ public class DFS {
 		adjLists[4] = new Vertex("E",null);
 		adjLists[5] = new Vertex("F",null);
 	}
-	public void createEdgesDirected() {
-		int edges=0;
-		for(int i =0; i<6; i++) {
-			String vertex1, vertex2;
-			System.out.println("Enter the name of First Vertex");
-			vertex1 = sc.nextLine();
-			System.out.println("Enter the name of Second Vertex");
-			vertex2 = sc.nextLine();
+	public void createEdgesUnDirected(String vertex1, String vertex2) {
 
-			int v1 = indexForName(vertex1);
-			int v2 = indexForName(vertex2);
+		int v1 = indexForName(vertex1);
+		int v2 = indexForName(vertex2);
 
-			System.out.println("Vertex1 : "+vertex1 +" Index : "+v1);
-			System.out.println("Vertex2 : "+vertex2 +" Index : "+v2);
-
-			adjLists[v1].adjacencyList = new Neighbour(v2, adjLists[v1].adjacencyList);
-			//			adjLists[v2].adjacencyList = new Neighbour(v1, adjLists[v2].adjacencyList);
-		}
+		adjLists[v1].adjacencyList = new Neighbour(v2, adjLists[v1].adjacencyList);
+		//		adjLists[v2].adjacencyList = new Neighbour(v1, adjLists[v2].adjacencyList);
 	}
+
 	int indexForName(String name) {
 		for(int i=0 ; i<adjLists.length; i++) {
 			if(adjLists[i].name.equals(name)) {
@@ -50,35 +40,40 @@ public class DFS {
 			for(Neighbour nbr=adjLists[v].adjacencyList; nbr != null; nbr= nbr.next ) {
 				System.out.println("-->" +adjLists[nbr.vertexNumber].name );
 			}
-//			System.out.println("\n");
+			//			System.out.println("\n");
 		}
 	}
 
-		public void dfs(int v, boolean [] visited) {
-			visited[v] = true;
-			for(Neighbour nbr=adjLists[v].adjacencyList; nbr != null; nbr= nbr.next ) {
-				if(!visited[nbr.vertexNumber]) {
-					System.out.println(adjLists[v].name +"-->" +adjLists[nbr.vertexNumber].name );
-					dfs(nbr.vertexNumber,visited);
-				}
+	public void dfs(int v, boolean [] visited) {
+		visited[v] = true;
+		for(Neighbour nbr=adjLists[v].adjacencyList; nbr != null; nbr= nbr.next ) {
+			if(!visited[nbr.vertexNumber]) {
+				System.out.println(adjLists[v].name +"-->" +adjLists[nbr.vertexNumber].name );
+				dfs(nbr.vertexNumber,visited);
 			}
-		}
-		
-		public void dfs() {
-			boolean [] visited = new boolean[adjLists.length];
-			for(int i =0; i< visited.length; i++) {
-				if(!visited[i]) {
-					System.out.println("Starting the Driver at : "+adjLists[i].name);
-					dfs(i,visited);
-				}
-			}
-		}
-
-		public static void main(String[] args) {
-			DFS g1 = new DFS();
-			g1.createVertices();
-			g1.createEdgesDirected();
-			g1.printGraph();
-			g1.dfs();
 		}
 	}
+
+	public void dfs() {
+		boolean [] visited = new boolean[adjLists.length];
+		for(int i =0; i< visited.length; i++) {
+			if(!visited[i]) {
+				System.out.println("Starting the Driver at : "+adjLists[i].name);
+				dfs(i,visited);
+			}
+		}
+	}
+
+	public static void main(String[] args) {
+		DFS g1 = new DFS();
+		g1.createVertices();
+		g1.createEdgesUnDirected("A","B");
+		g1.createEdgesUnDirected("A","C");
+		g1.createEdgesUnDirected("B","D");
+		g1.createEdgesUnDirected("C","D");
+		g1.createEdgesUnDirected("D","E");
+		g1.createEdgesUnDirected("E","F");
+		g1.printGraph();
+		g1.dfs();
+	}
+}
